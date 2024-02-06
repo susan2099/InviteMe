@@ -10,6 +10,7 @@ dist/
 web-build/
 
 package-lock.json
+config.js
 
 # Native
 *.orig.*

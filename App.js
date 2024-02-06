@@ -3,69 +3,35 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
-//import GetLocation, {Location, LocationErrorCode, isLocationError} from 'react-native-get-location';
-//import RNLocation from 'react-native-location';
-//import Geolocation from '@react-native-community/geolocation';
+import GooglePlacesInput from './client/GooglePlacesInput';
+import Map from './client/Map.js'
 
 
 export default function App() {
 
-  const [userLocation, setUserLocation] = useState({latitude: null, longitude:null});
-  const [errorMsg, setErrorMsg] = useState(null);
+  const [currentView, setCurrentView] = useState({latitude:0, longitude:0});
 
-  useEffect(() => {
-    (async () => {
-      
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setUserLocation({latitude: location.coords.latitude, longitude: location.coords.longitude})
-    })();
-  }, []);
+  const updateCurrentView = (location) => {
+    setCurrentView({latitude:location.latitude, longitude:location.longitude});
+  }
 
   return (
-    <View style={styles.container}>
-      <MapView
-       style={styles.map}
-       showsUserLocation={true}
-       region={{
-         latitude: userLocation.latitude,
-         longitude: userLocation.longitude,
-         latitudeDelta: 0.05,
-         longitudeDelta: 0.0121,
-       }}
-     >
-       <Marker
-        coordinate={{ latitude : userLocation.latitude , longitude : userLocation.longitude}}
-        title={'Hello'}
-        description={'World'}
-        image={require('./marker.png')}
-      >
-      </Marker>
-      {console.log(userLocation)}
-     </MapView>
+    <View style= {styles.container}>
+      <Map> currentView={currentView} updateCurrentView={updateCurrentView}</Map>
+      <GooglePlacesInput/>
     </View>
   );
-}
+};
 
 
 const styles = StyleSheet.create({
-  container: {
+  constainer: {
     ...StyleSheet.absoluteFillObject,
-    height: 900,
-    width: 400,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
   },
   map: {
     ...StyleSheet.absoluteFillObject,
   },
- });
-
+});
 
  //step 1:
 {/* <MapView
