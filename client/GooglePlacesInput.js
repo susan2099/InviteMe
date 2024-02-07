@@ -1,25 +1,29 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { api_key } from '../config.js';
+import api_key from '../config.js';
 import axios from 'axios';
 import Constants from 'expo-constants';
 
-const GooglePlacesInput = () => {
+const GooglePlacesInput = ({currentView, updateCurrentView}) => {
     return (
       <View style={styles.searchContainer}>
         <GooglePlacesAutocomplete
           placeholder="Search"
           query={{
-            key: api_key,
+            key:api_key,
             language: 'en', // language of the results
           }}
           onPress={(data, details = null) => {
             var location = data.description.split(' ').join('+')
             axios.get(`https://nominatim.openstreetmap.org/search?q=${location}&format=geojson`)
               .then((geoCode) => {
-                console.log(JSON.parse(geoCode.request["_response"]).features[0].geometry);
-              });
+            JSON.parse(geoCode.request["_response"]).features[0].geometry;
+                updateCurrentView({longitude: position.coordinates[0], latitude: position.coordinates[1]})
+            })
+                .catch((err) => {
+                  console.log(err);
+                })
 
           }}
           onFail={(error) => console.error(error)}
