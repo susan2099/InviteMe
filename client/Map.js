@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button, Image } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import EventModal from './EventModal.js'
 
-  const Map = ({ currentView, userLocation }) => {
+  const Map = ({ currentView, userLocation, potentialEvent }) => {
+
+    const [eventModalVisible, setEventModalVisible] = useState(false);
     return (
       <View style={styles.container}>
         <MapView
@@ -19,17 +22,36 @@ import MapView, { Marker } from 'react-native-maps';
             coordinate={{ latitude: 37.78525, longitude: -122.4124 }}
             title={'Hello'}
             description={'World'}
-            image={require('../marker.png')}
+            image={require('../assets/marker.png')}
           >
           </Marker>
           <Marker
           coordinate={{ latitude : userLocation.latitude , longitude : userLocation.longitude }}
           title={'Hello'}
           description={'World'}
-          image={require('../marker.png')}
+          image={require('../assets/marker.png')}
         >
         </Marker>
+        {
+          potentialEvent?
+          <Marker
+            coordinate={{ latitude : currentView.latitude , longitude: currentView.longitude }}
+            // title={'Event'}
+            // description={'Test'}
+            onPress={() => setEventModalVisible(true)}
+          >
+            <Image
+              source={require('../assets/potentialEvent.png')}
+              style={{width: 30, height: 50}}
+            />
+          </Marker>
+          : null
+        }
         </MapView>
+        <EventModal
+        eventModalVisible={eventModalVisible}
+        setEventModalVisible={setEventModalVisible}
+      />
       </View>
     );
   };

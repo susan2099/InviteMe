@@ -5,7 +5,7 @@ import api_key from '../config.js';
 import axios from 'axios';
 import Constants from 'expo-constants';
 
-const GooglePlacesInput = ({currentView, updateCurrentView}) => {
+const GooglePlacesInput = ({currentView, updateCurrentView, setPotentialEvent}) => {
     return (
       <View style={styles.searchContainer}>
         <GooglePlacesAutocomplete
@@ -17,13 +17,14 @@ const GooglePlacesInput = ({currentView, updateCurrentView}) => {
           onPress={(data, details = null) => {
             var location = data.description.split(' ').join('+')
             axios.get(`https://nominatim.openstreetmap.org/search?q=${location}&format=geojson`)
-              .then((geoCode) => {
-            JSON.parse(geoCode.request["_response"]).features[0].geometry;
-                updateCurrentView({longitude: position.coordinates[0], latitude: position.coordinates[1]})
+            .then((geoCode) => {
+              let position = JSON.parse(geoCode.request["_response"]).features[0].geometry;
+              updateCurrentView({longitude: position.coordinates[0], latitude: position.coordinates[1]})
+              setPotentialEvent(true)
             })
-                .catch((err) => {
-                  console.log(err);
-                })
+            .catch((err) => {
+              console.log(err);
+            })
 
           }}
           onFail={(error) => console.error(error)}
