@@ -51,6 +51,8 @@ import EventModal from './EventModal.js'
         <EventModal
         eventModalVisible={eventModalVisible}
         setEventModalVisible={setEventModalVisible}
+        potentialEventAddress={potentialEventAddress}
+        addNewEvent={addNewEvent}
       />
       </View>
     );
