@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, FlatList, Alert, Modal, StyleSheet, Text, Pressable, View, TextInput, Dimensions, ScrollView, Platform } from "react-native";
+import { Image, FlatList, Alert, Modal, StyleSheet, Text, Pressable, View, TextInput, Dimensions, ScrollView, Button } from "react-native";
 // import DatePicker from './DatePicker.js'; 
 import DatePicker from 'react-native-date-picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -7,7 +7,9 @@ import FriendItem from './FriendItem.js'
 
 var screenSize = Dimensions.get('window');
 
-const EventModal = ({ eventModalVisible, setEventModalVisible }) => { 
+const EventModal = ({ eventModalVisible, setEventModalVisible, potentialEventAddress, addNewEvent, setPotentialEvent, currentView }) => { 
+    const [eventTitle, onChangeEventTitle] = React.useState("");
+    //const [eventDate, setEventDate] = useState(new Date());
     const [eventText, onChangeEventText] = useState("");
     const [date, setDate] = useState(new Date());
     const [showDatePicker, setShowDatePicker] = useState(false);
@@ -61,15 +63,21 @@ const EventModal = ({ eventModalVisible, setEventModalVisible }) => {
             <View style={styles.modalView}>
                 <Pressable
                 style={[styles.button, styles.buttonClose]}
-                onPress={() => setEventModalVisible(!eventModalVisible)}
-                >
+                onPress={() => {
+                  setEventModalVisible(!eventModalVisible)
+                  onChangeEventTitle('');
+                  setEventDate(new Date());
+                  setEventInviteList({});
+                  setPotentialEvent(false);
+                }}
+              >
                 <Text style={styles.textStyle}>X</Text>
                 </Pressable>
                 <TextInput
                 style={styles.input}
-                onChangeText={onChangeEventText}
+                onChangeText={onChangeEventTitle}
                 placeholder="Event Title"
-                value={eventText}
+                value={eventTitle}
                 />
                 <Pressable onPress={() => setShowDatePicker(true)}>
                 <Text>Show Date Picker</Text>
@@ -94,10 +102,27 @@ const EventModal = ({ eventModalVisible, setEventModalVisible }) => {
                 })
               }
             </ScrollView>
+            <Button 
+              title="Create" 
+              onPress={() => {
+                addNewEvent({
+                  title: eventTitle,
+                  address: potentialEventAddress,
+                  inviteList: eventInviteList,
+                  date: date, // Changed from selectedDate to date
+                  coordinates:currentView
+                })
+                setEventModalVisible(!eventModalVisible);
+                onChangeEventTitle('');
+                setDate(new Date());
+                setEventInviteList({});
+                setPotentialEvent(false)
+              }}
+            />
             </View>
-            </View>
+          </View>
         </Modal>
-        </View>
+      </View>
     );
 };
 
