@@ -5,6 +5,7 @@ import GooglePlacesInput from './GooglePlacesInput';
 import Map from './Map';
 import { getUserLocation } from './helperFunctions/helperFunctions';
 import { DrawerActions } from '@react-navigation/native';
+import { Icon } from '@rneui/themed';
 
 export default function HomeScreen({navigation, friendsList, eventList, setEventList}) {
   const [currentView, setCurrentView] = useState({ latitude: 0, longitude: 0 });
@@ -53,11 +54,21 @@ export default function HomeScreen({navigation, friendsList, eventList, setEvent
         friendsList={friendsList}
       />
       <View style={styles.resetButton}>
-        <Button title="Reset" onPress={resetView} />
+          <Icon
+          name='navigation'
+          reverse={true}
+          size={18}
+          onPress={resetView} />
+          {/* <Button
+          title='Reset'
+          onPress={resetView}
+        /> */}
       </View>
       <View style={styles.hambugerButton}>
-        <Button
-          title="Open drawer"
+      <Icon
+          name='menu'
+          reverse={true}
+          size={18}
           onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
         />
       </View>

@@ -1,10 +1,10 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 8001;
 
-
-app.get('/userData', (req,res) => {
-  res.send(data)
+app.get('/userData', (req, res) => {
+  console.log('Request received at /userData');
+  res.send(data);
 });
 
 app.listen(port, () => {
@@ -18,31 +18,37 @@ var data = {
       id: '1',
       title: 'Andy',
       coordinates: {latitude: 37.7779911, longitude: -122.392759},
+      status: 'In class'
     },
     {
       id: '2',
       title: 'Jessica',
       coordinates: {latitude: 37.7679911, longitude: -122.399759},
+      status: 'At work at work'
     },
     {
       id: '3',
       title: 'Carl',
       coordinates: {latitude: 37.7699911, longitude: -122.392759},
+      status: 'Doing nothing'
     },
     {
       id: '4',
       title: 'Jasmine',
       coordinates: {latitude: 37.7579911, longitude: -122.392759},
+      status: 'Currently out eating lunch'
     },
     {
       id: '5',
       title: 'Fred',
       coordinates: {latitude: 37.7079911, longitude: -122.392759},
+      status: ''
     },
     {
       id: '6',
       title: 'Alex',
       coordinates: {latitude: 37.7891669, longitude: -122.4165994},
+      status: 'Watching tv at home'
     },
 
   ],
@@ -60,7 +66,7 @@ var data = {
       address: "The Pub, Ownes Stree, San Francisco, CA, USA",
       coordinates: {latitude: 37.7679911, longitude: -122.392759},
       date: '2021-04-10T19:00:10.000Z',
-      inviteList: {"4": "Jasmine", "6": "Alex", "1": "Andy"},
+      inviteList: {"4": "Jasmine", "6": "Alex", "1": "Andy", "3": "Carl"},
       title: "Lets go hangout with seal"
     },
 

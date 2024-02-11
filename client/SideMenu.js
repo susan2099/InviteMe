@@ -8,10 +8,11 @@ import {
   DrawerActions,
 } from '@react-navigation/drawer';
 import FriendItem from './FriendItem.js';
+import EventItem from './EventItem.js';
 
 var screenSize = Dimensions.get('window');
 
-const DATA = [
+/*const DATA = [
   {
     id: '1',
     title: 'Andy',
@@ -36,7 +37,7 @@ const DATA = [
     id: '6',
     title: 'Alex',
   },
-];
+];*/
 
 const SideMenu = (props) => {
   return (
@@ -45,7 +46,7 @@ const SideMenu = (props) => {
       <Text>Friends</Text>
       <ScrollView style={{height: 200}}>
         {
-          DATA.map((item) => {
+          props.friendsList.map((item) => {
             return (
               <View
                 style={ styles.friend }
@@ -55,7 +56,10 @@ const SideMenu = (props) => {
                   source={require('../assets/defaultUser.png')}
                   style={{width: screenSize.width * .1, height: screenSize.height * .04, borderRadius: 50, marginRight: 20}}
                 ></Image>
-                <Text style={styles.title}>{item.title}</Text>
+                <View>
+                  <Text style={{fontWeight: 'bold'}}>{item.title}</Text>
+                  <Text>{ item.status}</Text>
+                </View>
               </View>
             )
           })
@@ -66,17 +70,7 @@ const SideMenu = (props) => {
         {
           props.eventList.map((event, index) => {
             return (
-              <View key={index}>
-                <Text style={{ fontWeight: 'bold' }} >
-                  {`Title: ${event.title}`}
-                </Text>
-                <Text>
-                  {`Address: ${event.address}`}
-                </Text>
-                <Text>
-                  {`Date/Time: ${event.date}`}
-                </Text>
-              </View>
+              <EventItem key={index} event={event}/>
             )
           })
         }
@@ -98,5 +92,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: screenSize.width * .6,
     height: screenSize.height * .06,
+  },
+  event: {
+    backgroundColor: '#f9c2ff',
+    padding: 10,
+    marginVertical: 5,
+    marginHorizontal: 5,
+    flexDirection: 'column',
+    width: screenSize.width * .6,
+    height: screenSize.height * .08,
   },
 });

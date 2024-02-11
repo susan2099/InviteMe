@@ -77,6 +77,34 @@ import EventModal from './EventModal.js'
             )
           })
         }
+        {
+          friendsList.map((friend) => {
+            return (
+              <Marker
+                key={friend.id}
+                coordinate={friend.coordinates}
+                title={friend.title}
+                description={friend.status}
+              >
+                <Image
+                  source={require('../assets/defaultUser.png')}
+                  style={{width: 35, height: 35, borderRadius: 50, borderColor: 'black', borderWidth: 2}}
+                />
+                {/* <Callout style={{width: screenSize.width * .6}}>
+                  <Text style={{ fontWeight: 'bold' }} >
+                    {`Title: ${event.title}`}
+                  </Text>
+                  <Text>
+                    {`Address: ${event.address}`}
+                  </Text>
+                  <Text>
+                    {`Date/Time: ${event.date}`}
+                  </Text>
+                </Callout> */}
+              </Marker>
+            )
+          })
+        }
         
         </MapView>
         <EventModal

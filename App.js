@@ -7,6 +7,7 @@ import HomeScreen from './client/HomeScreen';
 import SideMenu from './client/SideMenu';
 import LoginScreen from './client/LoginScreen';
 import axios from 'axios';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 // Create Drawer and Stack navigators
 const Drawer = createDrawerNavigator();
@@ -30,23 +31,26 @@ export default function App() {
   const [eventList, setEventList] = useState([]);
 
   useEffect(() => {
-    axios.get(`$http://localhost:3000/userData`)
+    axios.get(`http://10.0.2.2:8001/userData`)
       .then((userData) => {
         setEventList(userData.data.eventList)
         setFriendsList(userData.data.friendsList)
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+
       })
   }, []);
   return (
-    <NavigationContainer>
-       <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={LoginScreen}/>
-        <Stack.Screen name="Map">
-          {props => <MyDrawer {...props} eventList={eventList} friendsList={friendsList} setEventList={setEventList}/>}
-        </Stack.Screen>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Login" component={LoginScreen}/>
+          <Stack.Screen name="Map">
+            {props => <MyDrawer {...props} eventList={eventList} friendsList={friendsList} setEventList={setEventList}/>}
+          </Stack.Screen>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
