@@ -1,11 +1,36 @@
 const express = require('express');
 const app = express();
-const port = 8001;
+const port = 3000;
+const { register, login, createEvent, updateStatus, updateLocation, requestFriend, acceptFriend, rejectFriend } = require('../database/model/queryFunctions.js');
+
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/userData', (req, res) => {
   console.log('Request received at /userData');
   res.send(data);
 });
+
+app.post('/register', register);
+
+app.get('/login', login);
+
+app.post('/createEvent', createEvent);
+
+app.put('/updateStatus', updateStatus);
+
+app.put('/updateLocation', updateLocation);
+
+app.post('/requestFriend', requestFriend);
+
+app.put('/acceptFriend', acceptFriend);
+
+app.delete('/rejectFriend', rejectFriend);
+
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`)
