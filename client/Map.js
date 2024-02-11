@@ -86,6 +86,7 @@ import EventModal from './EventModal.js'
         addNewEvent={addNewEvent}
         setPotentialEvent={setPotentialEvent}
         currentView={currentView}
+        friendsList={friendsList}
       />
       </View>
     );

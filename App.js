@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './client/HomeScreen';
 import SideMenu from './client/SideMenu';
 import LoginScreen from './client/LoginScreen';
+import axios from 'axios';
 
 // Create Drawer and Stack navigators
 const Drawer = createDrawerNavigator();
@@ -27,6 +28,17 @@ export default function App() {
   const [friendsList, setFriendsList] = useState([]);
 
   const [eventList, setEventList] = useState([]);
+
+  useEffect(() => {
+    axios.get(`$http://localhost:3000/userData`)
+      .then((userData) => {
+        setEventList(userData.data.eventList)
+        setFriendsList(userData.data.friendsList)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }, []);
   return (
     <NavigationContainer>
        <Stack.Navigator initialRouteName="Login">

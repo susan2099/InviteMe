@@ -7,7 +7,7 @@ import FriendItem from './FriendItem.js'
 
 var screenSize = Dimensions.get('window');
 
-const EventModal = ({ eventModalVisible, setEventModalVisible, potentialEventAddress, addNewEvent, setPotentialEvent, currentView }) => { 
+const EventModal = ({ eventModalVisible, setEventModalVisible, potentialEventAddress, addNewEvent, setPotentialEvent, currentView, friendsList }) => { 
     const [eventTitle, onChangeEventTitle] = React.useState("");
     //const [eventDate, setEventDate] = useState(new Date());
     const [eventText, onChangeEventText] = useState("");
@@ -15,7 +15,7 @@ const EventModal = ({ eventModalVisible, setEventModalVisible, potentialEventAdd
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [eventInviteList, setEventInviteList] = useState({});
 
-    const DATA = [
+    /*const DATA = [
         {
             id: '1',
             title: 'Andy',
@@ -40,7 +40,7 @@ const EventModal = ({ eventModalVisible, setEventModalVisible, potentialEventAdd
             id: '6',
             title: 'Alex',
         },
-    ];
+    ];*/
 
 
     const handleDateChange = (event, selectedDate) => {
@@ -90,9 +90,9 @@ const EventModal = ({ eventModalVisible, setEventModalVisible, potentialEventAdd
                     onChange={handleDateChange}
                 />
                 )}
-                <ScrollView>
-              {
-                DATA.map((item) => {
+              <ScrollView>
+                {
+                friendsList.map((item) => {
                   return <FriendItem
                     eventInviteList={eventInviteList}
                     setEventInviteList={setEventInviteList}
