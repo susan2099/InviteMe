@@ -3,18 +3,19 @@ const { mongoose } = require('../index.js');
 const userSchema = mongoose.Schema({
   username: String,
   password: String,
-  location: Object,
+  coordinates: {type: Object, default: [0,0]},
   status: String,
-  events: {type: Array, default: []},
+  profilePicture: String,
+  events: {type: Object, default: {}},
   friends: {type: Object, default: {}} //0 pending, 1 requested, 2 accepted
 });
 
 const eventsSchema = mongoose.Schema({
-  location: Object,
+  location: Array,
   address: String,
   date: Date,
   title: String,
-  inviteList: Array
+  inviteList: Object
 });
 
 module.exports.User = mongoose.model('User', userSchema);

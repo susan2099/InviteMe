@@ -3,7 +3,8 @@ import { StyleSheet, Text, View, Button, Image, Dimensions } from 'react-native'
 import MapView, { Marker, Callout } from 'react-native-maps';
 import EventModal from './EventModal.js'
 
-  const Map = ({ currentView, userLocation, potentialEvent, potentialEventAddress, addNewEvent, setPotentialEvent, friendsList, eventList }) => {
+const Map = ({ currentView, userLocation, potentialEvent, potentialEventAddress, addNewEvent, setPotentialEvent, friendsList, eventList }) => {
+
 
     const [eventModalVisible, setEventModalVisible] = useState(false);
     return (
@@ -18,20 +19,6 @@ import EventModal from './EventModal.js'
             longitudeDelta: 0.0121,
           }}
         >
-          <Marker
-            coordinate={{ latitude: 37.78525, longitude: -122.4124 }}
-            title={'Hello'}
-            description={'World'}
-            image={require('../assets/marker.png')}
-          >
-          </Marker>
-          <Marker
-          coordinate={{ latitude : userLocation.latitude , longitude : userLocation.longitude }}
-          title={'Hello'}
-          description={'World'}
-          image={require('../assets/marker.png')}
-        >
-        </Marker>
         {
           potentialEvent?
           <Marker
@@ -48,15 +35,11 @@ import EventModal from './EventModal.js'
           : null
         }
         {
-          eventList.map((event, index) => {
+          eventList.map((event) => {
             return (
               <Marker
-                key={index}
+                key={event['_id']}
                 coordinate={event.coordinates}
-                title={`${event.date}`}
-                description={
-                  `Address: ${event.address}`
-                }
               >
                 <Image
                   source={require('../assets/eventMarker.png')}
@@ -81,9 +64,9 @@ import EventModal from './EventModal.js'
           friendsList.map((friend) => {
             return (
               <Marker
-                key={friend.id}
+              key={friend['_id']}
                 coordinate={friend.coordinates}
-                title={friend.title}
+                title={friend.username}
                 description={friend.status}
               >
                 <Image

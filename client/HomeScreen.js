@@ -6,8 +6,13 @@ import Map from './Map';
 import { getUserLocation } from './helperFunctions/helperFunctions';
 import { DrawerActions } from '@react-navigation/native';
 import { Icon } from '@rneui/themed';
+import axios from 'axios';
+import {localIP} from '../config.js';
 
-export default function HomeScreen({navigation, friendsList, eventList, setEventList}) {
+export default function HomeScreen({navigation, friendsList, eventList, setEventList, userData }) {
+  console.log(userData)
+  //const { userData } = route.params;
+  //console.log(userData)
   const [currentView, setCurrentView] = useState({ latitude: 0, longitude: 0 });
   const [userLocation, setUserLocation] = useState({ latitude: 0, longitude: 0 });
   const [potentialEvent, setPotentialEvent] = useState(false);
@@ -25,6 +30,14 @@ export default function HomeScreen({navigation, friendsList, eventList, setEvent
   };
 
   const addNewEvent= (newEvent) => {
+
+    axios.post(`http://10.0.2.2:3000/createEvent`, { event: {...newEvent, id: userData['_id'] }})
+      .then((status) => {
+        console.log(status.status)
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     eventList.push(newEvent);
     setEventList(eventList)
   }
@@ -36,6 +49,13 @@ export default function HomeScreen({navigation, friendsList, eventList, setEvent
         
       });
       updateCurrentView(locations);
+      axios.post(`http://10.0.2.2:3000/setUserLocation`, {userID: userData['_id'], coordinates: [location.coords.latitude, location.coords.longitude] })
+        .then((status) => {
+          console.log('User Location Updated', status.status);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
   }, []);
   
@@ -50,8 +70,9 @@ export default function HomeScreen({navigation, friendsList, eventList, setEvent
         potentialEventAddress={potentialEventAddress}
         setPotentialEvent={setPotentialEvent}
         addNewEvent={addNewEvent}
-        eventList={eventList}
-        friendsList={friendsList}
+        eventList={userData.events}
+        friendsList={userData.friends}
+        userData={userData}
       />
       <View style={styles.resetButton}>
           <Icon

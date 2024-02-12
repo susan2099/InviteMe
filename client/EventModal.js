@@ -87,7 +87,10 @@ const EventModal = ({ eventModalVisible, setEventModalVisible, potentialEventAdd
             )}
             <ScrollView>
               {friendsList.map((item) => {
-                return <FriendItem updateEventList={updateEventList} key={item.id} item={item} />
+                return <FriendItem 
+                  updateEventList={updateEventList} 
+                  key={item['_id']}
+                  item={item} />
               })}
             </ScrollView>
             <Button
@@ -95,6 +98,7 @@ const EventModal = ({ eventModalVisible, setEventModalVisible, potentialEventAdd
               onPress={() => {
                 addNewEvent({
                   title: eventTitle,
+                  location: currentView,
                   address: potentialEventAddress,
                   inviteList: eventInviteList,
                   date: date.toString(),  // Use 'date' state instead of 'eventDate'

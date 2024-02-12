@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
-const port = 3000;
-const { register, login, createEvent, updateStatus, updateLocation, requestFriend, acceptFriend, rejectFriend } = require('../database/model/queryFunctions.js');
+const port = 8000;
+const { register, login, createEvent, updateStatus, updateLocation, requestFriend, acceptFriend, rejectFriend, setUserLocation } = require('../database/model/queryFunctions.js');
 
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -12,12 +12,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/userData', (req, res) => {
   console.log('Request received at /userData');
-  res.send(data);
+  res.json(data);
 });
 
 app.post('/register', register);
 
-app.get('/login', login);
+app.post('/login', login);
+
+app.post('/setUserLocation', setUserLocation);
 
 app.post('/createEvent', createEvent);
 
@@ -31,10 +33,10 @@ app.put('/acceptFriend', acceptFriend);
 
 app.delete('/rejectFriend', rejectFriend);
 
-
-app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}`)
+app.listen(3000, () => {
+  console.log(`Listening at http://localhost:${port}`);
 });
+
 
 
 var data = {
@@ -107,4 +109,4 @@ var data = {
     inviteList: {"3": "Carl", "5": "Fred"},
     "title": "Let’s checkout the museum"}
   ]
-}
+};

@@ -1,7 +1,7 @@
 
+const { DB_IP } = require('../config.js');
 const mongoose = require('mongoose');
 
-const {DB_IP} = require('../config.js');
 
 
 mongoose.set('strictQuery', true);
