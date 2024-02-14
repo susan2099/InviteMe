@@ -11,13 +11,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/userData', (req, res) => {
-  console.log('Request received at /userData');
-  res.json(data);
+  res.send(data)
 });
 
 app.post('/register', register);
 
-app.post('/login', login);
+app.get('/login', login);
 
 app.post('/setUserLocation', setUserLocation);
 

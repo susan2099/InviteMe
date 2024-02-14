@@ -8,15 +8,12 @@ const RegisterScreen = ({ navigation }) => {
   const [ password, setPassword ] = useState('');
 
   const navigateToLogin = async () => {
-    console.log('Hello, before Axios request');
     try {
-      const response = await axios.post('http://10.0.2.2:3000/register/', { username, password });
-      console.log('Response data:', response.data);
-      navigation.navigate('Map', { userData: response.data });
+      const userData = await axios.post('http://10.0.2.2:3000/register/', { username, password });
+      navigation.navigate('Map', { userData: userData.data });
     } catch (error) {
       console.error('Axios error:', error);
     }
-    console.log('Hello, after Axios request');
   };
 
   return (

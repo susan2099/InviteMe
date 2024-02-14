@@ -9,7 +9,6 @@ export const getUserLocation = async (callback) => {
     }
 
     const location = await Location.getCurrentPositionAsync({});
-    console.log('Location:', location.coords.latitude, ',', location.coords.longitude);
 
     callback(location.coords);
   } catch (error) {

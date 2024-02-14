@@ -23,8 +23,6 @@ const Map = ({ currentView, userLocation, potentialEvent, potentialEventAddress,
           potentialEvent?
           <Marker
             coordinate={{ latitude : currentView.latitude , longitude: currentView.longitude }}
-            // title={'Event'}
-            // description={'Test'}
             onPress={() => setEventModalVisible(true)}
           >
             <Image
@@ -73,17 +71,6 @@ const Map = ({ currentView, userLocation, potentialEvent, potentialEventAddress,
                   source={require('../assets/defaultUser.png')}
                   style={{width: 35, height: 35, borderRadius: 50, borderColor: 'black', borderWidth: 2}}
                 />
-                {/* <Callout style={{width: screenSize.width * .6}}>
-                  <Text style={{ fontWeight: 'bold' }} >
-                    {`Title: ${event.title}`}
-                  </Text>
-                  <Text>
-                    {`Address: ${event.address}`}
-                  </Text>
-                  <Text>
-                    {`Date/Time: ${event.date}`}
-                  </Text>
-                </Callout> */}
               </Marker>
             )
           })

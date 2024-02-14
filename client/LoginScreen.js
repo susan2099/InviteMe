@@ -8,22 +8,21 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   const loginUser = () => {
-    axios.post(`http://10.0.2.2:3000/login/`, { username, password })
-      .then((response) => {
-        console.log('in');
-        navigation.navigate({ name: 'Map', params: { userData: response.data } });
+    axios.get(`http://10.0.2.2:3000/login/?username=${username}&password=${password}`)
+      .then((userData) => {
+        navigation.navigate({ name: 'Map', params: { userData: userData.data } });
       })
       .catch((err) => {
-        if (err.response) {
-          if (err.response.status === 401) {
-            console.log('Invalid username or password. Please try again.');
-          } else {
-            console.log('An unexpected error occurred. Please try again later.');
-          }
-        } else {
-          console.log('Network error. Please check your connection.');
-        }
-      });
+  if (err.response) {
+    if (err.response.status === 401) {
+      console.log('Invalid username or password. Please try again.');
+    } else {
+      console.log('An unexpected error occurred. Please try again later.');
+    }
+  } else {
+    console.log('Network error. Please check your connection.');
+  }
+});
   };
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -43,12 +42,6 @@ const LoginScreen = ({ navigation }) => {
         autoCapitalize='none'
         secureTextEntry={true}
       />
-      {/* <TouchableOpacity style={styles.loginBtn}>
-        <Text style={styles.loginText}>LOGIN</Text>
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <Text style={styles.loginText}>Signup</Text>
-      </TouchableOpacity> */}
       <Button title="LOGIN" onPress={loginUser}></Button>
       <Button title="SIGNUP" onPress={() => navigation.navigate('Register')}></Button>
     </View>

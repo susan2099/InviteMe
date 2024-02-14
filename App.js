@@ -58,5 +58,3 @@ export default function App() {
   );
 }
 
-
-// {props => console.log(props.route.params.userData)}

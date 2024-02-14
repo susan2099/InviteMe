@@ -13,6 +13,7 @@ module.exports = {
         res.send(409);
       } else {
         const userData = await User.create({ username, password });
+        //console.log(userData)
         res.status(201).send({ "_id": userData['_id'], events: [], username: userData.username, friends: [], requestedFriendsList: [], pendingFriendsList: [] });
       }
     } catch(err) {
@@ -76,7 +77,7 @@ module.exports = {
           console.log(err);
         })
 
-    } catch(err) {
+    }catch(err) {
       console.log(err);
       res.sendStatus(401);
     }
@@ -116,15 +117,15 @@ module.exports = {
           })
       });
 
-      Promise.all(friendInvitePromises)
-        .then(() => {
-          res.sendStatus(200);
-        })
+      await Promise.all(friendInvitePromises);
+        console.log('Event created successfully:', eventID);
+        console.log('User updated successfully:', userData);
 
-    } catch(err) {
-      console.log(err);
-      res.sendStatus(404)
-    }
+        res.sendStatus(200);
+      } catch (err) {
+        console.log(err);
+        res.sendStatus(404);
+      }
   },
 
   updateStatus: async (req, res) => {
@@ -179,7 +180,6 @@ module.exports = {
 
   acceptFriend: async (req, res) => {
     const { username, requestFriendUserName } = req.body;
-    console.log(username)
     try {
       let userData = await User.findOne({ username })
       userData.friends[requestFriendUserName] = 2;
@@ -202,7 +202,6 @@ module.exports = {
 
   rejectFriend: async (req, res) => {
     const { username, requestFriendUserName } = req.body;
-    console.log(username)
     try {
 
       let userData = await User.findOne({ username })

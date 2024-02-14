@@ -18,9 +18,6 @@ const EventItem = ({ event, index }) => {
       <Text style={{ fontWeight: 'bold' }} >
         {`Title: ${event.title}`}
       </Text>
-      {/* <Text>
-        {`Address: ${event.address}`}
-      </Text> */}
       <Text>
         {`Date/Time: ${event.date}`}
       </Text>
@@ -43,6 +40,5 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     flexDirection: 'column',
     width: screenSize.width * .6,
-    //height: screenSize.height * .08,
   },
 });

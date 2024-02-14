@@ -10,15 +10,11 @@ import axios from 'axios';
 import {localIP} from '../config.js';
 
 export default function HomeScreen({navigation, friendsList, eventList, setEventList, userData }) {
-  console.log(userData)
-  //const { userData } = route.params;
-  //console.log(userData)
   const [currentView, setCurrentView] = useState({ latitude: 0, longitude: 0 });
   const [userLocation, setUserLocation] = useState({ latitude: 0, longitude: 0 });
   const [potentialEvent, setPotentialEvent] = useState(false);
   const [potentialEventAddress, setPotentialEventAddress] = useState('');
 
-  //const [eventList, setEventList] = useState([]);
 
   const updateCurrentView = (location) => {
     setCurrentView({ latitude: location.latitude, longitude: location.longitude });
@@ -33,7 +29,6 @@ export default function HomeScreen({navigation, friendsList, eventList, setEvent
 
     axios.post(`http://10.0.2.2:3000/createEvent`, { event: {...newEvent, id: userData['_id'] }})
       .then((status) => {
-        console.log(status.status)
       })
       .catch((err) => {
         console.log(err);
@@ -42,20 +37,22 @@ export default function HomeScreen({navigation, friendsList, eventList, setEvent
     setEventList(eventList)
   }
   useEffect(() => {
-    getUserLocation((locations) => {
-      setUserLocation({
-        latitude: locations.latitude,
-        longitude: locations.longitude
-        
-      });
-      updateCurrentView(locations);
-      axios.post(`http://10.0.2.2:3000/setUserLocation`, {userID: userData['_id'], coordinates: [location.coords.latitude, location.coords.longitude] })
-        .then((status) => {
-          console.log('User Location Updated', status.status);
-        })
-        .catch((err) => {
-          console.log(err);
+    getUserLocation((location) => {
+      let coords = location.coords || location;  // Use location if coords is not available
+  
+      if (coords && typeof coords.latitude === 'number' && typeof coords.longitude === 'number') {
+        setUserLocation({
+          latitude: coords.latitude,
+          longitude: coords.longitude,
         });
+        updateCurrentView(location);
+        axios.post(`http://10.0.2.2:3000/setUserLocation`, { userID: userData['_id'], coordinates: [coords.latitude, coords.longitude] })
+          .then((status) => {
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     });
   }, []);
   

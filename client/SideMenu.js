@@ -12,33 +12,6 @@ import EventItem from './EventItem.js';
 
 var screenSize = Dimensions.get('window');
 
-/*const DATA = [
-  {
-    id: '1',
-    title: 'Andy',
-  },
-  {
-    id: '2',
-    title: 'Jessica',
-  },
-  {
-    id: '3',
-    title: 'Carl',
-  },
-  {
-    id: '4',
-    title: 'Jasmine',
-  },
-  {
-    id: '5',
-    title: 'Fred',
-  },
-  {
-    id: '6',
-    title: 'Alex',
-  },
-];*/
-
 const SideMenu = (props) => {
   return (
 
